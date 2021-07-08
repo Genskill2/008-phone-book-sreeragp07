@@ -216,7 +216,7 @@ int search(FILE *db_file,char *name) {
     //printf("%-20s : %10s\n", p->name, p->phone);
     if (strcmp(p->name, name) == 0)
     {
-    	printf("%-20s : %10s\n", p->name, p->phone);
+    	printf("%10s\n", p->phone);
     	result=1;
     	break;
     }
