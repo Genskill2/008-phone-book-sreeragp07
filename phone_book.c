@@ -235,41 +235,44 @@ int delete(FILE *db_file, char *name) {
   entry *del = NULL ; /* Node to be deleted */
   int deleted = 0;
   //prev=p;
-  if (strcmp(p->name, name) == 0) {
+  if ((p!=NULL) && (strcmp(p->name, name) == 0)) {
   	base=p->next;
   	deleted=1;
   }
-  
-  while (p!=NULL) {
-    prev=p;
-    if (strcmp(p->name, name) == 0) {
-      /* Matching node found. Delete it from the linked list.
-         Deletion from a linked list like this
-   
-             p0 -> p1 -> p2
-         
-         means we have to make p0->next point directly to p2. The p1
-         "node" is removed and free'd.
-         
-         If the node to be deleted is p0, it's a special case. 
-      */
-     
-     del=p;
-     prev->next=del->next;
-    deleted=1;
-    
-     
-      
+  else
+  {
+  	prev=p;
+  	p=p->next;
+	while (p!=NULL) {
+	    
+	    if (strcmp(p->name, name) == 0) {
+	      /* Matching node found. Delete it from the linked list.
+		 Deletion from a linked list like this
+	   
+		     p0 -> p1 -> p2
+		 
+		 means we have to make p0->next point directly to p2. The p1
+		 "node" is removed and free'd.
+		 
+		 If the node to be deleted is p0, it's a special case. 
+	      */
+	     
+	     del=p;
+	     prev->next=del->next;
+	    deleted=1;
+	    break;
+	       
 
-      /* TBD */
-    }
-   
-    p=p->next;
+	      /* TBD */
+	    }
+	    prev=p;
+	    p=p->next;
+	  }  
   }
+  
   
   write_all_entries(base);
   free_entries(base);
-  free_entries(del);
-  free_entries(prev);
+  
   return deleted;
 }
