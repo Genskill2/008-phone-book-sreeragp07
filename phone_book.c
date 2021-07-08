@@ -266,9 +266,10 @@ int delete(FILE *db_file, char *name) {
    
     p=p->next;
   }
-  free_entries(del);
-  free_entries(prev);
+  
   write_all_entries(base);
   free_entries(base);
+  free_entries(del);
+  free_entries(prev);
   return deleted;
 }
